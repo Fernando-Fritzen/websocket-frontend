@@ -5,8 +5,28 @@ import { useMapEvents } from "react-leaflet";
 import osm from "./osm-providers";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import io from 'socket.io-client'
+const endpoint = "http://192.168.0.104:3001"
+const socket = io.connect("http://localhost:3001")
 
 function App() {
+
+  
+  useEffect(() => {
+    socket.on('listaMarca', (data) => {
+      // setListOfMarkers(data)
+      alert("Recebido")
+      console.log('Recebido...')
+    })
+  }, [socket])
+
+  useEffect(() => {
+    // const socket = io(endpoint);
+
+    socket.emit('ffff', {fe: "fefe"})
+    console.log("Lista: ",listOfMarkers)
+  }, [])
+
   const [center, setCenter] = useState({ lat: -25.284, lng: 305.2449 });
   const ZOOM_LEVEL = 9;
   const mapRef = useRef();
@@ -27,6 +47,7 @@ function App() {
   function LocationMarker() {
     const map = useMapEvents({
       click(e) {
+        socket.emit("ffff", {})
         console.log(typeof(e.latlng.lat))
         setCurrentPosition(e.latlng)
         console.log("Evento: ",e.latlng)
