@@ -5,7 +5,7 @@ import { useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import io from "socket.io-client";
-const socket = io.connect("http://192.168.0.104:3001");
+const socket = io.connect("http://localhost:3001");
 
 function App() {
   const [listOfMarkers, setListOfMarkers] = useState([]);
@@ -35,11 +35,6 @@ function App() {
     });
   }
 
-  // function IsOnline() {
-  //   return window.navigator.onLine;
-  // }
-
-  
   useEffect(() => {
     window.addEventListener("offline", setNetwork(window.navigator.onLine));
     window.addEventListener("online", setNetwork(window.navigator.onLine));
